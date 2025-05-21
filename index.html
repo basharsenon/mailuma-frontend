@@ -31,6 +31,17 @@
       50% { width: 80%; }
       100% { width: 0%; }
     }
+    .btn-copy {
+      background: #00ff9f33;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      border: 1px solid #00ff9f;
+      color: #00ff9f;
+      cursor: pointer;
+    }
+    .btn-copy:hover {
+      background: #00ff9f55;
+    }
   </style>
 </head>
 <body class="flex flex-col items-center justify-center h-screen px-4">
@@ -44,11 +55,28 @@
 
     <div id="aliasSection">
       <p class="text-green-300 mb-2">🟢 Secure Gmail generated:</p>
-      <p class="text-2xl glow">📨 <span id="gmailDisplay">loading...</span></p>
+      <p class="text-2xl glow mb-4">📨 <span id="gmailDisplay">loading...</span></p>
+      <button class="btn-copy" onclick="copyGmail()">📋 Copy Gmail</button>
+    </div>
+
+    <div class="mt-8">
+      <p class="text-green-400 text-sm mb-2">📩 Inbox Preview:</p>
+      <div class="text-sm">
+        <p>[✉] 1: "Activate your Zoom account" – from: noreply@zoom.us</p>
+        <p>[✉] 2: "Confirm your signup" – from: security@mail.com</p>
+        <p>[✉] 3: "Reset your password" – from: accounts@service.com</p>
+      </div>
     </div>
   </div>
 
   <script>
+    function copyGmail() {
+      const alias = document.getElementById('gmailDisplay').innerText;
+      navigator.clipboard.writeText(alias).then(() => {
+        alert('Gmail copied to clipboard!');
+      });
+    }
+
     fetch('https://mailuma-backend.onrender.com/generate-alias')
       .then(res => res.json())
       .then(data => {
